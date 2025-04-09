@@ -1,0 +1,50 @@
+@font-face {
+    font-family:"RetroFont";
+    src: url(./RetroGaming.ttf);
+}
+
+body {
+    font-family: "RetroFont";
+    text-align: center;
+    margin: 0;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    min-height: 99vh;
+    background-image: url(./Fundo.jpg);
+    color: #fff;
+    border: 1px solid #00FF00;
+    border-radius: 2px;
+    
+}
+
+input{
+    font-family: "RetroFont";
+}
+.Container{
+    max-width: 250px;
+    width: 100%;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.829);
+    border: 1px solid #00FF00;
+    border-radius: 2px;
+
+}
+
+button{
+    margin: 5px;
+    padding: 10px;
+    font-size: 13px;
+    cursor: pointer;
+    background-color: #fff;
+    border: #585858de;
+    border-radius: 10px;
+    color: black;
+    font-family: "RetroFont";
+
+}
+
+.Dificuldade,.Regras,.ganhou,.perdeu,.LeaderBoard{
+    background-color: #0a0a0af5;
+    color: white;
+}
