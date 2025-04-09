@@ -1,194 +1,53 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
+@font-face {
+    font-family:"RetroFont";
+    src: url(./RetroGaming.ttf);
+}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adivinhe</title>
-    <link rel="stylesheet" href="./style.css">
-</head>
+body {
+    font-family: "RetroFont";
+    text-align: center;
+    margin: 0;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    min-height: 99vh;
+    background-image: url(./Fundo.jpg);
+    color: #fff;
+    border: 1px solid #00FF00;
+    border-radius: 2px;
+    
+}
 
-<body>
-    <div class="Container">
-        <h1>Adivinhe o número</h1>
-        <input type="number" id="NunInput">
-        <button onclick="Enviar()">Enviar</button>
-        <button onclick="Atulizar()">Resetar</button>
+input{
+    font-family: "RetroFont";
+}
+.Container{
+    max-width: 250px;
+    width: 100%;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.829);
+    border: 1px solid #00FF00;
+    border-radius: 2px;
 
-        
-        <div>
-            <p>Você Tem :</p>
-            <p id="TentativasRestantantes"></p>
-        </div>
-        <dialog class="Regras" id="DialogRegras">
-            <h2>Regras</h2>
-            <li>O objetivo do jogo é descobrir qual é o número aleatório com base nas dicas.</li>
-            <li>A quantidade de tentativas depende da dificuldade escolhida.</li>
-            <li>Se as tentativas chegarem a 0, você perde.</li>
-            <li>Cada dificuldade tem um multiplicador diferente por quantidade de tentativas restantes</li>
-            <button id="FecharRegras">Fechar</button>
-        </dialog>
+}
 
-        <button id="Dificuldade">Dificuldade</button>
-        <button id="Regras">Regras</button>
-        <button id="LeaderBoard">HighScore</button>
-        <div id="dica"> </div>
-        
-        <dialog class="LeaderBoard" id="Leader">
-            <p>HIghScore</p>
-            <p id="HighScore"></p>
-            <button id="LeaderBoardClose">Fechar</button>
+button{
+    margin: 5px;
+    padding: 10px;
+    font-size: 13px;
+    cursor: pointer;
+    background-color: #fff;
+    border: #585858de;
+    border-radius: 10px;
+    color: black;
+    font-family: "RetroFont";
+}
 
-        </dialog>
-        
-        <dialog class="Dificuldade" id="DialogDificuldade">
-            <h2>Selecione a dificuldade do jogo</h2>
-            <div>
-                <button class="Dificil" onclick="Dificil('red')">Difícil</button>
-                <button onclick="Media()">Média</button>
-                <button onclick="Facil()">Fácil</button>
-            </div>
-            <button id="FecharDificuldade">Fechar</button>
-        </dialog>
+button:hover{
+    background-color: #b4b4b4;
+}
 
-        <dialog class="ganhou" id="ganhou">
-            <p>Você GANHOU!!!!!</p>
-            <button onclick="FecharDialogo('ganhou')">Fechar</button>
-        </dialog>
-
-        <dialog class="perdeu" id="perdeu">
-            <p>Você Perdeu!!!!!</p>
-            <button onclick="FecharDialogo('perdeu')">Fechar</button>
-        </dialog>
-    </div>
-
-    <script>
-        let num; /* variavel para receber num gerado aletorio*/
-        let tentativas = 15;/* tentarivas padrão */
-        let multiplicador = 100
-        let pontuação = 0
-        let melhorPontuação = 0
-        /* Gera o modais para mostrar regras dificulades ou se ganhou/perdeu*/
-        const modalDificuldade = document.getElementById("DialogDificuldade");
-        const buttonDificuldade = document.getElementById("Dificuldade");
-        const buttonCloseDificuldade = document.getElementById("FecharDificuldade");
-        const LeaderBoard = document.getElementById("Leader");
-        const buttonLeaderBoard = document.getElementById("LeaderBoard");
-        const buttonLeaderBoardClose = document.getElementById("LeaderBoardClose");
-        const modalRegras = document.getElementById("DialogRegras");
-        const buttonRegras = document.getElementById("Regras");
-        const buttonCloseRegras = document.getElementById("FecharRegras");
-
-        const modalGanhou = document.getElementById("ganhou");
-        const modalPerdeu = document.getElementById("perdeu");        
-
-        /* Botões para  abrir os modais*/
-        buttonDificuldade.onclick = function () {
-            modalDificuldade.showModal();
-        }
-
-        buttonRegras.onclick = function () {
-            modalRegras.showModal();
-        }
-        buttonLeaderBoard.onclick = function (){
-            LeaderBoard.showModal();
-        }
-
-        /* boão para fechar os modais*/
-        buttonCloseDificuldade.onclick = function () {
-            modalDificuldade.close();
-        }
-
-        buttonCloseRegras.onclick = function () {
-            modalRegras.close();
-        }
-
-        buttonLeaderBoardClose.onclick = function () {
-            LeaderBoard.close();
-        }
-
-        function FecharDialogo(dialogId) {
-            document.getElementById(dialogId).close();
-        }
-
-        /* seletor de dificuldade*/
-        function Dificil() {
-            tentativas = 5;
-            multiplicador = 750;
-            Atulizar();
-            modalDificuldade.close();
-            document.querySelector(".Container").style.border = "2px solid #ff0000";
-            document.body.style.border = "1px solid #ff0000";
-        }
-
-        function Media() {
-            tentativas = 10;
-            multiplicador = 250;
-            Atulizar();
-            modalDificuldade.close();
-            document.querySelector(".Container").style.border = "2px solid #FFFF00";
-            document.body.style.border = "1px solid #FFFF00";
-
-        }
-
-        function Facil() {
-            tentativas = 15;
-            multiplicador = 100;
-            Atulizar();
-            modalDificuldade.close();
-            document.querySelector(".Container").style.border = "2px solid#00FF00";
-            document.body.style.border = "1px solid#00FF00";
-        }
-
-        /* gerador de num aleatorio */
-        function GerarNum() {
-            num = Math.floor(Math.random() * 100) + 1;
-        }
-
-        /*verificador  de resposta*/
-        function Enviar() {
-            const numAdivinhar = parseInt(document.getElementById('NunInput').value);
-            document.getElementById('TentativasRestantantes').innerHTML = tentativas;
-            
-
-            if(num > numAdivinhar){
-                document.getElementById('dica').innerHTML = "<p> O numero é maior </p>";
-            }else{
-                document.getElementById('dica').innerHTML = "<p> O numero é menor</p>";
-            }
-
-            if (numAdivinhar === num) {
-                modalGanhou.showModal();
-                HighScore();
-                Atulizar();
-            } else {
-                tentativas--;
-                if (tentativas === 0) {
-                    modalPerdeu.showModal();
-                    Atulizar();
-                }
-            }
-        }
-
-        function HighScore(){
-            pontuação = tentativas * multiplicador
-            
-            if(pontuação > melhorPontuação){
-                melhorPontuação = pontuação;
-            }
-            localStorage.setItem(melhorPontuação,melhorPontuação);
-            document.getElementById("HighScore").innerHTML = localStorage.getItem(melhorPontuação);
-
-        }
-
-        /* chama a função para gerar o numero aletorio */
-        GerarNum();
-        
-        function Atulizar() {
-            console.log("tentativas é :", tentativas);
-            document.getElementById('TentativasRestantantes').innerHTML = tentativas;
-            GerarNum();
-        }
-        HighScore();
-    </script>
-</body>
+.Dificuldade,.Regras,.ganhou,.perdeu,.LeaderBoard{
+    background-color: #0a0a0af5;
+    color: white;
+}
