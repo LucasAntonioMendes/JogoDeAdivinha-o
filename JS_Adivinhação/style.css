@@ -41,7 +41,10 @@ button{
     border-radius: 10px;
     color: black;
     font-family: "RetroFont";
+}
 
+button:hover{
+    background-color: #b4b4b4;
 }
 
 .Dificuldade,.Regras,.ganhou,.perdeu,.LeaderBoard{
